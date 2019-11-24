@@ -15,22 +15,21 @@ https://github.com/TaoSP
 www_ht@163.com
 
 驱动架构
-Driver Architecture
-DriverArch
-https://github.com/TaoSP/DriverArch
-https://github.com/TaoSP/DriverArch.git
+DriverArchitecture
+https://github.com/TaoSP/DriverArchitecture
+https://github.com/TaoSP/DriverArchitecture.git
 
-P_learnPy
-https://github.com/TaoSP/P_learnPy
-https://github.com/TaoSP/P_learnPy.git
-
-P_cppTest
-https://github.com/TaoSP/P_cppTest
-https://github.com/TaoSP/P_cppTest.git
+Python
+https://github.com/TaoSP/Python
+https://github.com/TaoSP/Python.git
 
 专业学习记录
 https://github.com/TaoSP/Professional
 https://github.com/TaoSP/Professional.git
+
+MachineLearning
+https://github.com/TaoSP/MachineLearning
+https://github.com/TaoSP/MachineLearning.git
 
 
 //Python项目学习
