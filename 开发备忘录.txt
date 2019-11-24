@@ -10,10 +10,6 @@
 显示Tab和空格：renderControlCharacters, renderWhitespace
 
 
-//Github
-https://github.com/TaoSP
-www_ht@163.com
-
 驱动架构
 DriverArchitecture
 https://github.com/TaoSP/DriverArchitecture
@@ -31,32 +27,6 @@ MachineLearning
 https://github.com/TaoSP/MachineLearning
 https://github.com/TaoSP/MachineLearning.git
 
-
-//Python项目学习
-https://github.com/CharlesPikachu/Games/
-
-【需求描述】增加工程目标、编译、源文件等各个目录
-【修改方法】新增文件夹和test文件（因为GitHub不能提交空文件夹）
-【影响范围】无
-【修改人】Tao
-【评审人】无
-
-
-// 2019.09.08
-走过许多弯路，MCU - STM32 - Linux - Driver -
-接下来：
-1、工作中，学习图像和音视频开发流程，关注HiSilicon AI的应用，智能算法的应用部署。
-2、下班后，继续学习吴恩达机器学习课程，阅读Tensorflow。
----- 
-2019.09.20
-1、学习Python，在github上开始记录。
-----
-2019.09.29
-1、想转战C++，跟自己嵌入式C比较搭。
-2、STL, Boost
-
-
-//全国计算机等级考试
 
 
 
