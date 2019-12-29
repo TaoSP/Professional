@@ -28,6 +28,35 @@ https://github.com/TaoSP/MachineLearning
 https://github.com/TaoSP/MachineLearning.git
 
 
+// VirtualBox + CentOS7
+选择两个网卡:
+1. Net 虚拟机访问外网, 10.0.2.x/24
+2. Host-Only 虚拟机和主机互相通信, VirtualBox自带虚拟网络适配器 192.168.56.1, 
+    DHCP服务器为 192.168.56.100, CentOS可分配到 192.168.56.101
+/etc/sysconfig/network-scripts/ifcfg-enp0s3
+HWADDR=xxxx虚拟机网卡1设定的
+ONBOOT=yes
+service network restart 即可访问外网
+
+配置开发环境:
+Windows10:
+VSCode 开发, 开 NFS 服务或共享文件, CentOS 下挂载编译:
+控制面板\程序\打开或关闭windows功能, 勾选 NFS客户端 和 管理工具
+安装 NFS服务器 haneWIN Software
+编辑输出文件, C:\H04.Pro\DriverArchitecture\trunk -public, 再重启所有服务
+CentOS:
+yum install gcc
+yum install gcc-c++
+方法1:
+yum install nfs-utils
+systemctl start rpcbind
+systemctl enable rpcbind
+mount -t nfs 192.168.1.71:/C/H04.Pro/DriverArchitecture /hom/tao/pro -o nolock,tcp
+方法2:
+共享文件夹 DriverArchitecture (file://WIN10-TAO/DriverArchitecture)
+mount -t cifs -o username=admin,password=123456 //192.168.1.71/DriverArchitecture /hom/tao/pro
+接下来，即可使用CentOS编译了。
+
 
 
 -- Done --
