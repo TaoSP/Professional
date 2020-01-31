@@ -1,5 +1,5 @@
 /******************************************************************************
- * binaryTre.cpp
+ * binaryTree.cpp
  * Author : Huangtao
  * Version: V1.0.0  2020-01-26 Create
  * Description: 二叉排序树, 非模板实现, 非平衡
@@ -131,7 +131,7 @@ int BinaryTree::insert(int val)
 
 // case 1. 被删除节点是叶子节点，直接删除
 // case 2. 被删除节点只有左子树或只有右子树，将整个子树移到被删除节点位置
-// case 3. 被删除节点同时有左子树和右子树, 用前驱或后继节点值替代被删除节点
+// case 3. 被删除节点同时有左子树和右子树, 用前驱或后继节点值替代被删除节点，再删除前驱或后继
 int BinaryTree::remove(int val)
 {
     Node *pNode = this->find(val);
@@ -147,33 +147,32 @@ int BinaryTree::remove(int val)
             pDel = pDel->rightChild;
         }
         pNode->val = pDel->val;
-        
     }
     else // case 1, 2
     {
         pDel = pNode;
-        pNode = (pNode->leftChild) ? pNode->leftChild : pNode->rightChild;
-        if(pNode)
-        {
-            pNode->parent = pDel->parent;
-        }
-        
-        if(pDel->parent == nullptr) // 被删除节点是头节点
-        {
-            root = pNode;
-        }
+    }
+
+    Node *pChild = (pDel->leftChild) ? pDel->leftChild : pDel->rightChild;
+    if(pChild)
+    {
+        pChild->parent = pDel->parent; // 让孩子指向被删除节点的父节点
+    }
+    
+    if(pDel->parent == nullptr) // 被删除节点是头节点
+    {
+        root = pChild;
+    }
+    else
+    {
+        if(pDel == pDel->parent->leftChild)
+            pDel->parent->leftChild = pChild; // 用子树替换被删除节点
         else
-        {
-            if(pDel == pDel->parent->leftChild)
-                pDel->parent->leftChild = pNode; // 用子树替换被删除节点
-            else
-                pDel->parent->rightChild = pNode;
-        }
+            pDel->parent->rightChild = pChild;
     }
 
     delete pDel;
     pDel = nullptr;
-
     return true;
 }
 
@@ -331,14 +330,12 @@ int main()
     for(int i = 0; i< 12; i++)
         tree.insert(val[i]);
 
-    tree.remove(2);
-
-    //tree.preOrder();
-    //cout << endl;
+    tree.preOrder();
+    cout << endl;
     tree.inOrder();
     cout << endl;
-    //tree.postOrder();
-    //cout << endl;
+    tree.postOrder();
+    cout << endl;
     tree.layerOrder();
     cout << endl;
 
@@ -346,6 +343,18 @@ int main()
     cout << tree.successor(tree.find(8))->val << endl;
     cout << tree.minimum() << endl;
     cout << tree.maximum() << endl;
+
+    cout << "remove test:" << endl;
+    int input;
+    while(1)
+    {
+        cin >> input;
+        tree.remove(input);
+        tree.inOrder();
+        cout << endl;
+        tree.layerOrder();
+        cout << endl;
+    }
 
     return 0;
 }
