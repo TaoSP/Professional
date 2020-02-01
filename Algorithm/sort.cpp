@@ -8,18 +8,23 @@
 #include <algorithm>
 #include <vector>
 //#include <array>
+#include <stack>
 using namespace std;
 
 class MySort
 {
 private:
     /* data */
+    int getPartition(vector<int> & v, int l, int r);
+    void quickSort(vector<int> & v, int l, int r);
 public:
     MySort(/* args */);
     ~MySort();
-    void insertionSort(vector<int> & v);
-    void bubbleSort(vector<int> & v);
-    void selectSort(vector<int> & v);
+    void insertionSort(vector<int> & v);        // 插入排序
+    void bubbleSort(vector<int> & v);           // 冒泡
+    void selectSort(vector<int> & v);           // 选择
+    void quickSort(vector<int> & v);            // 快排，对冒泡排序的一种改进，分治法
+    void quickSortNonRecursive(vector<int> & v); // 快排，非递归
 };
 
 MySort::MySort(/* args */)
@@ -77,17 +82,90 @@ void MySort::selectSort(vector<int> & v)
     }
 }
 
+int MySort::getPartition(vector<int> & v, int l, int r)
+{
+    int key = v.at(l); // 选一个枢轴点，同时暂存第一个值
+    while(l < r)
+    {
+        // 顺序不能反，先找小于key的，
+        while(l < r && v[r] >= key) r--;
+        if(l < r)
+            v[l++] = v[r];
+        
+        while (l < r && v[l] <= key) l++;
+        if(l < r)
+            v[r--] = v[l];
+
+    }
+    v[l] = key; // l=r, 一趟后，经过互相交换，比枢轴点小的在左，比它大的在右边
+    return l;
+}
+
+void MySort::quickSort(vector<int> & v, int l, int r)
+{
+    if(l >= r) return;
+
+    int mid = this->getPartition(v, l, r);
+    quickSort(v, l, mid - 1);
+    quickSort(v, mid + 1, r);
+}
+
+void MySort::quickSort(vector<int> & v)
+{
+    this->quickSort(v, 0, v.size() - 1);
+}
+
+void MySort::quickSortNonRecursive(vector<int> & v)
+{
+    if(v.empty()) return;
+
+    stack<int> st;
+    int size = v.size(); // 防止 int < size_t(1-2)
+    int mid = this->getPartition(v, 0, size - 1);
+    if(mid > 1)
+    {
+        st.push(0);
+        st.push(mid - 1);
+    }
+    if(mid < size - 2)
+    {
+        st.push(mid + 1);
+        st.push(size - 1);
+    }
+
+    int l, r;
+    while(!st.empty())
+    {
+        r = st.top(); st.pop();
+        l = st.top(); st.pop();
+        mid = this->getPartition(v, l, r);
+        if(l < mid - 1)
+        {
+            st.push(l);
+            st.push(mid - 1);
+        }
+        if(r > mid + 1)
+        {
+            st.push(mid + 1);
+            st.push(r);
+        }
+    }
+}
+
 int main()
 {
     int arr[64] = {3,12,4,0,66,999,7,8,5,23,48,555555,2020,2019,43,404,31,30};
     vector<int> num;
+    //num.push_back(0);
     for(int i = 0; i < 18; i++)
         num.push_back(arr[i]);
 
     MySort mySort;
     //mySort.insertionSort(num);
     //mySort.bubbleSort(num);
-    mySort.selectSort(num);
+    //mySort.selectSort(num);
+    //mySort.quickSort(num);
+    mySort.quickSortNonRecursive(num);
 
     for(vector<int>::iterator it = num.begin(); it != num.end(); it++)
     {
