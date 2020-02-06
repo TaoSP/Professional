@@ -4,10 +4,12 @@
 #include <sstream>
 #include <string>
 #include <algorithm>
+#include <bitset>
 using namespace std;
 
 int main()
 {
+/*
     long num;
     while(cin >> num)
     {
@@ -24,5 +26,9 @@ int main()
             }
         }
     }
+*/
+    bitset<32> bin = 9; // 二进制个数
+    cout << "bits: " << bin.count() << endl;
+
     return 0;
 }
