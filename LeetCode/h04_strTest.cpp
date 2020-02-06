@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 // 字符串分割函数, str为待分割的字符串, pattern为任意分割符
@@ -46,13 +47,24 @@ int main()
         total += a[i];
     cout << total << endl; // 字符个数统计
 */
-
+/*
     string pattern(" ");
     string in;
     getline(cin, in);
-    vector<string> v = split(in, pattern);
+    vector<string> v = split(in, pattern); // // 字符串分割
     for(auto it = v.begin(); it != v.end(); it++)
         cout << *it << " " << endl;
+*/
+    vector<string> v;
+    string in;
+    int n;
+    cin >> n;
+    while(n-- && cin >> in)
+        v.push_back(in);
+    
+    sort(v.begin(), v.end()); // 字符串按照字典序排列
+    for(auto it = v.begin(); it != v.end(); it++)
+        cout << *it << endl;
 
     return 0;
 }
