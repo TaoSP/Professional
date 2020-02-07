@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <bitset>
 using namespace std;
 
 // 字符串分割函数, str为待分割的字符串, pattern为任意分割符
@@ -55,6 +56,7 @@ int main()
     for(auto it = v.begin(); it != v.end(); it++)
         cout << *it << " " << endl;
 */
+/*
     vector<string> v;
     string in;
     int n;
@@ -65,6 +67,40 @@ int main()
     sort(v.begin(), v.end()); // 字符串按照字典序排列
     for(auto it = v.begin(); it != v.end(); it++)
         cout << *it << endl;
+*/
+    // 密码验证
+    // 长度超过8位, 包括大小写字母.数字.其它符号,以上四种至少三种
+    // 不能有相同长度超2的子串重复
+    string str;
+    while(cin >> str)
+    {
+        bitset<8> bits = 0;
+        bool error = false;
+        for(auto c : str)
+        {
+            if(c >= '0' && c <= '9')
+                bits |= 0x1;
+            else if(c >= 'A' && c <= 'Z')
+                bits |= 0x2;
+            else if(c >= 'a' && c <= 'z')
+                bits |= 0x4;
+            else
+                bits |= 0x8;
+        }
+        if(str.size() <= 8 || bits.count() < 3)
+            error = true;
+        if(!error)
+            for(int i = 0; i <= str.size() - 6; i++) // 寻找重复子串
+                for(int j = i+3; j < str.size(); j++)
+                    if(str[i] == str[j] && str[i+1] == str[j+1]
+                        && str[i+2] == str[j+2])
+                        error = true;
+        if(error)
+            cout << "NG" << endl;
+        else
+            cout << "OK" << endl;
+    }
+
 
     return 0;
 }
