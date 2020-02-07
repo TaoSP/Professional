@@ -39,6 +39,7 @@ int fibonacci(int n)
 }
 
 // 最长递增子序列，可不连续
+// Longest increasing sequence, LIS问题
 int maxArrayOrder(vector<int> & v)
 {
     if(v.empty())
@@ -63,6 +64,31 @@ int maxArrayOrder(vector<int> & v)
         ret = max(ret, result[i]);
 
     return ret;
+}
+
+// 递增/递减子序列
+int demoLIS(vector<int> & v)
+{
+    int n = v.size();
+    //vector<vector<int>> dp(n, vector<int>(n, 0));
+    vector<int> dp(n, 1);
+    vector<int> dp2(n, 1);
+    for(int i = 1; i < n; i++)
+        for(int j = i - 1; j >= 0; j--)
+            if(v[i] > v[j] && dp[i] < dp[j]+1) // 递增
+                dp[i] = dp[j] + 1;
+    // 不能同时计算，递减从右边开始算起
+    for(int i = n - 2; i >= 0; i--)
+        for(int j = n - 1; j > i; j--)
+            if(v[i] > v[j] && dp2[i] < dp2[j]+1) // 递减
+                dp2[i] = dp2[j] + 1;
+    for(auto a : dp)
+        cout << a << " ";
+    cout << endl;
+    for(auto a : dp2)
+        cout << a << " ";
+    cout << endl;
+    return true;
 }
 
 // 最大连续子序列和
@@ -261,12 +287,18 @@ int moneyNum()
     return true;
 }
 
+// 最长回文子串
+
+
+
 int main()
 {
     //cout << fibonacci(20) << endl;
 
     vector<int> v{1, -2, -3, 9, 0, 6, 7, 8, -1};
     //cout << maxArrayOrder(v) << endl;
+
+    demoLIS(v);
 
     //cout << maxArraySum(v) << endl;
 
@@ -276,7 +308,7 @@ int main()
 
     //money();
 
-    moneyNum();
+    //moneyNum();
 
     return 0;
 }
