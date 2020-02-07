@@ -19,6 +19,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
 //#include <stack>
 //#include <queue>
 using namespace std;
@@ -288,17 +289,41 @@ int moneyNum()
 }
 
 // 最长回文子串
-
-
+int demoLPS(string str)
+{
+    int n = str.size();
+    // dp[i][j] 表示以...i~j...是否为回文子串
+    vector<vector<bool>> dp(n, vector<bool>(n, false));
+    int maxLen = 0, start;
+    //dp[0][0] = true;
+    for(int j = 1; j < n; j++)
+        for(int i = 0; i <= j; i++)
+        {
+            if(j == i)
+                dp[i][j] = true;
+            else if(j - i == 1)
+                dp[i][j] = (str[j] == str[i]);
+            else
+                dp[i][j] = (dp[i+1][j-1] && str[j] == str[i]);
+            if(dp[i][j] && (j - i + 1) > maxLen)
+            {
+                maxLen = j - i + 1;
+                start = i;
+            }
+        }
+    cout << "LPS len: " << maxLen << endl;
+    cout << str.substr(start, maxLen) << endl;
+    return maxLen;
+}
 
 int main()
 {
     //cout << fibonacci(20) << endl;
 
-    vector<int> v{1, -2, -3, 9, 0, 6, 7, 8, -1};
+    //vector<int> v{1, -2, -3, 9, 0, 6, 7, 8, -1};
     //cout << maxArrayOrder(v) << endl;
 
-    demoLIS(v);
+    //demoLIS(v);
 
     //cout << maxArraySum(v) << endl;
 
@@ -309,6 +334,8 @@ int main()
     //money();
 
     //moneyNum();
+
+    demoLPS("abbacdf");
 
     return 0;
 }
