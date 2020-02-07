@@ -155,6 +155,112 @@ void maxTriangleArray()
     cout << "max: " << sum << endl;
 }
 
+// 背包问题, 总容量W, 物品体积和价值wi,vi
+// 总价值: f(n, W) = max{f(n-1, W), vn + f(n-1, W-wn)}
+// dp[i][j] = max{dp[i-1][j], dp[i-1][j-wi]+vi}
+int packageHelper()
+{
+    int w[] = {2, 2, 6, 5, 4};
+    int v[] = {6, 3, 5, 4, 6};
+    int n = 5;
+    int weight = 10;
+    vector<vector<int>> dp(n+1, vector<int>(weight+1, 0)); // vector创建二维数组
+    // v.resize(n, vector<int>(m)); // 一次指定内外层大小
+    for(int i = 1; i < n+1; i++)
+        for(int j = 1; j < weight+1; j++)
+        {
+            if(j > w[i-1]) // i从1开始
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i-1]]+v[i-1]);
+            else
+                dp[i][j] = dp[i-1][j];
+        }
+    cout << "package: " << dp[n][weight] << endl;
+    // 使用一维滚动数组
+    //vector<int> ap(weight+1);
+    vector<int> ap(weight+1, 0);
+    for(int i = 1; i < n+1; i++)
+        // 滚动方向要注意，保证ap[j-w]用的是上个状态值，否则容易被自己这轮覆盖掉
+        for(int j = weight; j > 0; j--)
+        {
+            if(j > w[i-1])
+                ap[j] = max(ap[j], ap[j-w[i-1]]+v[i-1]);
+            else
+                ap[j] = ap[j];
+        }
+    cout << "package: " << ap[weight] << endl;
+    return true;
+}
+
+// 找零钱问题：有几种组合方式
+int money()
+{
+    vector<int> coins{1, 2, 5, 10, 20, 50, 100};
+    int n = coins.size();
+    int value = 10;
+    vector<vector<int>> dp(n+1, vector<int>(value+1, 0));
+
+    for(int i = 1; i <= value; i++)
+        if(i % coins[0] == 0)
+            dp[0][i] = 1; // 只用第一种货币对i找钱
+    //for(int i = 0; i < n; i++)
+    //    dp[i][0] = 1;
+
+    for(int i = 1; i < n; i++)
+        for(int j = 1; j <= value; j++)
+        {
+            if(j < coins[i]) // 这里不是coins[i-1], 上面已经用第一种货币初始化过
+                dp[i][j] = dp[i-1][j];
+            else
+                dp[i][j] = dp[i-1][j] + dp[i][j-coins[i]];
+        }
+    cout << "money: " << dp[n-1][value] << endl;
+    // 滚动数组解法
+    vector<int> ap(value+1, 0);
+    for(int i = 1; i <= value; i++)
+        if(i % coins[0] == 0)
+            ap[i] = 1;
+    for(int i = 1; i < n; i++)
+        for(int j = 1; j <= value; j++)
+        {
+            if(j >= coins[i])
+                ap[j] = ap[j] + ap[j - coins[i]];
+        }
+    cout << "money: " << ap[value] << endl;
+    return true;
+}
+
+// 找零钱问题：货币数最少
+// 还存在问题，待解决
+int moneyNum()
+{
+    vector<int> coins{1, 2, 5, 10, 20, 50, 100};
+    int n = coins.size();
+    int value = 90;
+    vector<vector<int>> dp(n+1, vector<int>(value+1, 0));
+
+    for(int i = 1; i <= value; i++)
+        if(i % coins[0] == 0)
+            dp[0][i] = i / coins[0]; // 数量
+
+    for(int i = 1; i < n; i++)
+        for(int j = 1; j <= value; j++)
+        {
+            if(j < coins[i])
+                dp[i][j] = dp[i-1][j];
+            else if(j == coins[i])
+                dp[i][j] = 1;
+            else
+            {
+                if(dp[i-1][j] && dp[i-1][j-coins[i]]) // 2种都存在取最小的
+                    dp[i][j] = min(dp[i-1][j], dp[i-1][j-coins[i]] + 1);
+                else
+                    dp[i][j] = dp[i-1][j] ? dp[i-1][j] : dp[i][j-coins[i]] + 1;
+            }
+        }
+    cout << "money num: " << dp[n-1][value] << endl;
+    return true;
+}
+
 int main()
 {
     //cout << fibonacci(20) << endl;
@@ -164,7 +270,13 @@ int main()
 
     //cout << maxArraySum(v) << endl;
 
-    maxTriangleArray();
+    //maxTriangleArray();
+
+    //packageHelper();
+
+    //money();
+
+    moneyNum();
 
     return 0;
 }
