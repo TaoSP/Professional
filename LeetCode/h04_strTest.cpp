@@ -37,6 +37,16 @@ vector<string> split(string str, string & pattern)
 int main()
 {
 /*
+    string str;
+    while(cin >> str)
+    {
+        stringstream ss(str);
+        int num;
+        ss >> hex >> num; // 16进制转10进制
+        cout << num << endl;
+    }
+*/
+/*
     int a[128] = {0};
     string str;
     getline(cin, str);
