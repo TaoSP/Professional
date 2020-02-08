@@ -71,7 +71,19 @@ int main()
     cout.precision(1); // 保留一位小数
     cout << pow(n, 1.0/3) << endl; // 求立方根
 */
-
+/*
+    int n = 2020;
+    stringstream ss; // stringstream 数字，字符串转换
+    ss << n;
+    string s1;
+    ss >> s1;
+    cout << s1 << endl;
+    ss.clear();
+    s1 = "60";
+    ss << s1;
+    ss >> n;
+    cout << n << endl;
+*/
 
     return 0;
 }
