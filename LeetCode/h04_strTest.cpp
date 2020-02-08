@@ -10,6 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <bitset>
+#include <map>
 using namespace std;
 
 // 字符串分割函数, str为待分割的字符串, pattern为任意分割符
@@ -32,6 +33,11 @@ vector<string> split(string str, string & pattern)
         v.push_back(str.substr(start));
 
     return v;
+}
+
+bool isBigger(const pair<char, int> & p1, const pair<char, int> & p2)
+{
+    return p1.second > p2.second;
 }
 
 int main()
@@ -78,6 +84,7 @@ int main()
     for(auto it = v.begin(); it != v.end(); it++)
         cout << *it << endl;
 */
+/*
     // 密码验证
     // 长度超过8位, 包括大小写字母.数字.其它符号,以上四种至少三种
     // 不能有相同长度超2的子串重复
@@ -110,7 +117,21 @@ int main()
         else
             cout << "OK" << endl;
     }
-
+*/
+    // 字符统计：如果个数相同，则按照ASII码由小到大排序输出
+    string str;
+    while(getline(cin, str))
+    {
+        map<char, int> mp;
+        for(auto a : str)
+            if((a>='0' && a<='9') || (a>='a' && a<='z') || a == ' ' || (a>='A' && a<='Z'))
+                mp[a]++;
+        vector<pair<char, int>> v(mp.begin(), mp.end()); // 一对值
+        stable_sort(v.begin(), v.end(), isBigger); // 稳定排序
+        for(auto a : v)
+            cout << a.first;
+        cout << endl;
+    }
 
     return 0;
 }
