@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <bitset>
+#include <cmath>
 using namespace std;
 
 int main()
@@ -36,6 +37,7 @@ int main()
     bitset<32> bin = 9; // 二进制个数
     cout << "bits: " << bin.count() << endl;
 */
+/*
     vector<int> v{3, 4, 5, 5, 3, 12, 12, 10, 1};
     sort(v.begin(), v.end()); // 先排序
     auto it = unique(v.begin(), v.end()); // unique 相邻元素去重, 内部是把后面不重复的元素移到前面
@@ -47,6 +49,29 @@ int main()
     for(auto a : v)
         cout << a << " ";
     cout << endl;
+*/
+/*
+    int a, b;
+    cin >> a >> b; // 最小公倍数
+    int m = max(a, b);
+    while(1)
+    {
+        if(m % a == 0 && m % b == 0)
+            break;
+        else
+            m++;
+    }
+    cout << m << endl;
+*/
+/*
+    // cout << fixed << showpoint << setprecision(2) << x << endl;
+    double n;
+    cin >> n;
+    cout << fixed;
+    cout.precision(1); // 保留一位小数
+    cout << pow(n, 1.0/3) << endl; // 求立方根
+*/
+
 
     return 0;
 }
