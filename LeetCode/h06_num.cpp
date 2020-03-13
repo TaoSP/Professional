@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <bitset>
 #include <cmath>
+#include <iomanip> // setprecision(1)
 using namespace std;
 
 int main()
